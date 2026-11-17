@@ -1,0 +1,92 @@
+config defaults
+	option syn_flood '1'
+	option input 'REJECT'
+	option output 'ACCEPT'
+	option forward 'REJECT'
+
+config zone
+	option name 'lan'
+	list network 'lan'
+	option input 'ACCEPT'
+	option output 'ACCEPT'
+	option forward 'ACCEPT'
+
+config zone
+	option name 'wan'
+	list network 'wan'
+	list network 'wan6'
+	option input 'REJECT'
+	option output 'ACCEPT'
+	option forward 'DROP'
+	option masq '1'
+	option mtu_fix '1'
+
+config forwarding
+	option src 'lan'
+	option dest 'wan'
+
+config zone
+	option name 'wire0'
+	option network 'wg0'
+	option input 'ACCEPT'
+	option output 'ACCEPT'
+	option forward 'ACCEPT'
+	option masq '1'
+	option mtu_fix '1'
+
+config zone
+	option name 'wire1'
+	option network 'wg1'
+	option input 'ACCEPT'
+	option output 'ACCEPT'
+	option forward 'ACCEPT'
+	option masq '1'
+	option mtu_fix '1'
+
+config forwarding
+	option src 'lan'
+	option dest 'wire1'
+
+config forwarding
+	option src 'wire0'
+	option dest 'lan'
+
+config forwarding
+	option src 'wire0'
+	option dest 'wire1'
+
+config forwarding
+	option src 'wire1'
+	option dest 'wire0'
+
+config rule 'Allow_Ssh_Wan'
+	option name 'Allow-Ssh-Wan'
+	option proto 'udp'
+	option src 'wan'
+	option dest_port '52215'
+	option target 'ACCEPT'
+	option enabled '1'
+
+config redirect 'FORCE_DNS_TO_WG1_DNS_P'
+        option name 'FORCE-DNS-TO-WG1-DNS_P'
+        option src 'lan'
+	option src_ip '10.0.0.2'
+        option src_dport '53'
+        option dest 'wan'
+        option dest_ip '100.100.0.2'
+        option dest_port '53'
+        option proto 'tcp udp'
+        option target 'DNAT'
+        option enabled '0'
+
+config redirect 'FORCE_DNS_TO_WG1_DNS_M'
+        option name 'FORCE-DNS-TO-WG1-DNS_M'
+        option src 'lan'
+        option src_ip '10.0.0.4'
+        option src_dport '53'
+        option dest 'wan'
+        option dest_ip '100.100.0.2'
+        option dest_port '53'
+        option proto 'tcp udp'
+        option target 'DNAT'
+        option enabled '0'

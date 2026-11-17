@@ -1,0 +1,21 @@
+config global
+        option anon_swap '0'
+        option anon_mount '0'
+        option auto_swap '1'
+        option auto_mount '1'
+        option delay_root '5'
+        option check_fs '0'
+
+config swap
+       option          label           'FLDRG_SWAP'
+       option          enabled         '1'
+
+config mount
+        option          target          '/sdcard'
+        option          label           'FLDRG_FS'
+        option          enabled         '1'
+
+config mount 'overlay'
+        option          target          '/overlay'
+        option          label           'FLDRG_ORLAY'
+        option          enabled         '1'

@@ -1,0 +1,89 @@
+config interface 'loopback'
+	option device 'lo'
+	option proto 'static'
+	list ipaddr '127.0.0.1/8'
+
+config globals 'globals'
+	option dhcp_default_duid '0004bbea23ff88b744549266e2b4108cb175'
+	option ula_prefix 'fdc8:a1ce:da5e::/48'
+
+config device
+	option name 'br-lan'
+	option type 'bridge'
+	list ports 'eth0.1'
+
+config interface 'lan'
+	option device 'br-lan'
+	option proto 'static'
+	list ipaddr '10.0.0.1/24'
+	option ip6assign '60'
+
+config device
+	option name 'eth0.2'
+	option macaddr 'f8:5e:3c:10:3f:df'
+
+config interface 'wan'
+	option device 'eth0.2'
+	option proto 'dhcp'
+
+config interface 'wan6'
+	option device 'eth0.2'
+	option proto 'dhcpv6'
+
+config switch
+	option name 'switch0'
+	option reset '1'
+	option enable_vlan '1'
+
+config switch_vlan
+	option device 'switch0'
+	option vlan '1'
+	option ports '0 1 2 3 6t'
+
+config switch_vlan
+	option device 'switch0'
+	option vlan '2'
+	option ports '4 6t'
+
+config interface 'wg0'
+	option proto 'wireguard'
+	option private_key 'KPVO6xbjjwWYg8JY0tI1dvopx+A6kLLZzTcN9yDjuGQ='
+	option listen_port '52215'
+	option addresses '100.100.1.1/24'
+	option enabled '1'
+
+config wireguard_wg0
+	option description 'Motorola'
+	option public_key 'eFbi/rA7Y9SQkGoZ9R7Rmbrh/6xP9i5z33wYZdmWw3w='
+	option preshared_key 'RWLzSkXaP2P0d/unH6NN9S/uTbVK6iQtmNg4FAcDWt0='
+	list allowed_ips '100.100.1.4/32'
+	option route_allowed_ips '1'
+	option persistent_keepalive '25'
+
+config wireguard_wg0
+	option description 'Iphone'
+	option public_key 'b6RM/Bl6eWalhiSeGZ0LKntThGMcvuOH2wbksIdApBI='
+	option preshared_key 'JAc+VFmKlcHql81DdGodhqQFGxa5svBBO+hKBq7dy+s='
+	list allowed_ips '100.100.1.5/32'
+	option route_allowed_ips '1'
+	option persistent_keepalive '25'
+
+config interface 'wg1'
+	option proto 'wireguard'
+	option private_key 'SIixlTKNaYVUibJp+O2LcynxCauUREDoKBGrD/EAlEs='
+	option addresses '100.100.0.1/24'
+	option listen_port '52346'
+	option disabled '0'
+
+config wireguard_wg1
+	option description 'Frankfurt am Main'
+	option endpoint_host '150.241.123.99'
+	option public_key '1ihDwoFscQ4DyDvbGLWmT3gXWdBPOr7AbaSupwtAkSw='
+	option preshared_key '1qiquHdm4xeL7ih4lAhqHacOLyYSyTZxTqJ8MoeIcGA='
+	option endpoint_port '52346'
+	list allowed_ips '100.100.0.2/32'
+	list allowed_ips '100.100.0.0/24'
+	list allowed_ips '0.0.0.0/0'
+	option route_allowed_ips '0'
+	option persistent_keepalive '25'
+

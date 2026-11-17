@@ -1,0 +1,20 @@
+
+config wifi-device 'radio0'
+	option type 'mac80211'
+	option path 'platform/10180000.wmac'
+	option band '2g'
+	option channel '1'
+	option htmode 'HT40'
+	option cell_density '0'
+
+config wifi-iface 'default_radio0'
+	option device 'radio0'
+	option network 'lan'
+	option mode 'ap'
+	option macaddr 'random'
+	option hidden '1'
+	option ssid '8aIzd5oNHLfl1IrqqkdUWGKVa'
+	option encryption 'sae'
+	option key '8FSgpeLOyFPT3FCUcfPnNhx7nX1JE7_~klqfq.....joihOSAOIHS125125125'
+	option ocv '0'
+
