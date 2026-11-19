@@ -59,6 +59,11 @@ config forwarding
 	option src 'wire1'
 	option dest 'wire0'
 
+config forwarding
+    option src 'wire1'
+    option dest 'lan'
+    option enabled '0'
+
 config rule 'Allow_Ssh_Wan'
 	option name 'Allow-Ssh-Wan'
 	option proto 'udp'
